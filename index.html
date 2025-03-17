@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrossel de Fotos</title>
+  <style>
+    /* Reseta margens e padding para evitar problemas de estilo */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Ajusta o body para ocupar a página toda e centralizar conteúdo */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f7f7f7;
+      font-family: sans-serif;
+    }
+
+    /* Container principal do carrossel */
+    .carousel-container {
+      position: relative;
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    /* Faixa que contém as imagens */
+    .carousel-slide {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    /* Ajusta cada imagem para ocupar a totalidade da largura do container */
+    .carousel-slide img {
+      width: 100%;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    /* Botões de navegação (anterior e próximo) */
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0,0,0,0.5);
+      border: none;
+      padding: 10px;
+      color: #fff;
+      font-size: 18px;
+      z-index: 100;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    /* Se quiseres remover o autoplay, basta eliminar o setInterval no JavaScript */
+  </style>
+</head>
+<body>
+
+  <!-- Container do carrossel -->
+  <div class="carousel-container">
+    <div class="carousel-slide">
+      <!-- Substitui as imagens pelos teus caminhos -->
+      <img src="https://via.placeholder.com/800x500/FF0000/FFFFFF?text=Imagem+1" alt="Imagem 1">
+      <img src="https://via.placeholder.com/800x500/00FF00/FFFFFF?text=Imagem+2" alt="Imagem 2">
+      <img src="https://via.placeholder.com/800x500/0000FF/FFFFFF?text=Imagem+3" alt="Imagem 3">
+    </div>
+    <!-- Botões de navegação -->
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const carouselSlide = document.querySelector('.carousel-slide');
+      const carouselImages = document.querySelectorAll('.carousel-slide img');
+      const prevBtn = document.querySelector('.prev');
+      const nextBtn = document.querySelector('.next');
+
+      let counter = 0;
+      const size = carouselImages[0].clientWidth;
+
+      function updateCarousel() {
+        carouselSlide.style.transform = 'translateX(' + (-size * counter) + 'px)';
+      }
+
+      // Botão "Próximo"
+      nextBtn.addEventListener('click', () => {
+        if (counter >= carouselImages.length - 1) return;
+        counter++;
+        updateCarousel();
+      });
+
+      // Botão "Anterior"
+      prevBtn.addEventListener('click', () => {
+        if (counter <= 0) return;
+        counter--;
+        updateCarousel();
+      });
+
+      // Autoplay: altera a imagem a cada 5 segundos
+      setInterval(() => {
+        counter = (counter + 1) % carouselImages.length;
+        updateCarousel();
+      }, 5000);
+    });
+  </script>
+
+</body>
+</html>

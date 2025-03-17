@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrossel de Fotos</title>
+  <style>
+    .carousel-container {
+      position: relative;
+      max-width: 100%;
+      margin: auto;
+      overflow: hidden;
+    }
+    .carousel-slide {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .carousel-slide img {
+      width: 100%;
+      flex-shrink: 0;
+    }
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0,0,0,0.5);
+      border: none;
+      padding: 10px;
+      color: #fff;
+      font-size: 18px;
+      z-index: 100;
+    }
+    .prev {
+      left: 10px;
+    }
+    .next {
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="carousel-container">
+    <div class="carousel-slide">
+      <img src="caminho/para/imagem1.jpg" alt="Imagem 1">
+      <img src="caminho/para/imagem2.jpg" alt="Imagem 2">
+      <img src="caminho/para/imagem3.jpg" alt="Imagem 3">
+      <!-- Adiciona mais imagens conforme necessário -->
+    </div>
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const carouselSlide = document.querySelector('.carousel-slide');
+      const carouselImages = document.querySelectorAll('.carousel-slide img');
+      const prevBtn = document.querySelector('.prev');
+      const nextBtn = document.querySelector('.next');
+      
+      let counter = 0;
+      const size = carouselImages[0].clientWidth;
+      
+      function updateCarousel() {
+        carouselSlide.style.transform = 'translateX(' + (-size * counter) + 'px)';
+      }
+      
+      nextBtn.addEventListener('click', () => {
+        if (counter >= carouselImages.length - 1) return;
+        counter++;
+        updateCarousel();
+      });
+      
+      prevBtn.addEventListener('click', () => {
+        if (counter <= 0) return;
+        counter--;
+        updateCarousel();
+      });
+      
+      // Autoplay: muda de imagem a cada 5 segundos
+      setInterval(() => {
+        counter = (counter + 1) % carouselImages.length;
+        updateCarousel();
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
